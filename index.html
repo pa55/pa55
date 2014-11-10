@@ -41,9 +41,9 @@
 <h3>What is the solution?</h3>
 
 <p>Passwords are terrible and there is a lot of research trying to find alternative reliable means of authentication. Until passwords disappear, the solution to the problem discussed above is the industry-standard Password Based Key Derivation Function version 2 or PBKDF2 (RFC2898: <a href="https://www.ietf.org/rfc/rfc2898.txt">https://www.ietf.org/rfc/rfc2898.txt</a>) along with a well-known cryptographically secure hash function: SHA1, SHA256 or SHA512. In simple terms, one can define PBKDF2 as a function as follows.</p>
-<pre><code>K = PBKDF2(P, S, R, A, L)
+<pre><code>DK = PBKDF2(PRF, PWD, S, C, L)
 </code></pre>
-<p>Here, K is the generated <i>key</i> of a desired length L from a <i>password</i> P mixed with <i>salt</i> S, using the HMAC hash function A with iterations R. Putting this in the perspective of pa55, we change the semantics of the terms as follows. P is the <i>master secret</i>, S is the <i>password hint</i>, L the desired size in characters while K is the <i>strong password</i> that pa55 generates for you. To keep it simple, let us ignore that pa55 allows you to change the values of R and A.</p>
+<p>Here, DK is the generated <i>key</i> of a desired length L from a <i>password</i> PWD mixed with <i>salt</i> S, using the pseudo-random function PRF with iterations C. Putting this in the perspective of pa55, we change the semantics of the terms as follows. PWD is the <i>master secret</i>, S is the <i>password hint</i>, L the desired size in characters while DK is the <i>strong password</i> that pa55 generates for you. To keep it simple, let us ignore that pa55 allows you to change the values of PRF and C.</p>
 
 <p>An alternative way to think of this is to consider pa55 as a black box, which accepts as inputs: a master secret, a password hint and some other parameters and outputs a strong random password. So long as the inputs remain the same, output remains unchanged. In other words, so long as you remember the master secret and the password hint, the same strong password will be generated for you. Furthermore, if you cannot distinguish the I from a 1, or a 0 from a o and so on in the generated password then pa55 can read it out in slow-paced clear English.</p>
 
