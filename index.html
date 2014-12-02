@@ -63,7 +63,7 @@
 
 <p>Let us try this example: set the master secret to "This should not be an easy sentence to figure out!" (ignore the double quotes). This secret is simple and easy to remember. (Of course, do not use this master secret literally!) Set the password hint to "abcd!someservice2014" (again, without the quotes). Well, this is a bit cryptic but that "abcd" part is supposed to be easy-to-remember, for instance the birthday that you might have used so far for your passwords. (Add a bit more secret information to it if you are really going to use your birthday!) Basically, you could just use a single weak password that you might have been using so far as this cryptic part. The part "someservice" identifies the service for which this password is going to be used and "2014" is optional if you want to have a date context to the passwords. (You could use months, days and even time but then you will not be able to remember that detail!) The generated password of desired length 12 characters in this example, is "1kd/9SxlITZ4" (without the quotes) with 72 bits entropy for password iterations set to 500K and the HMAC algorithm set to HMACwithSHA256. You will get a completely different password even if you just replaced the exclamation mark in the master secret with a period. Choosing a different value of the password length will, however, only result in a contraction or expansion of the generated password.</p>
 
-<h3>What goes on under the hood?</h3>
+<h3>What is going on under the hood?</h3>
 
 <p>pa55 utilises the industry-standard Password Based Key Derivation Function version 2 or PBKDF2 (RFC2898: <a href="https://www.ietf.org/rfc/rfc2898.txt">https://www.ietf.org/rfc/rfc2898.txt</a>) along with a well-known cryptographically secure hash function: SHA1, SHA256 or SHA512. In simple terms, one can define PBKDF2 as a function as follows.</p>
 <pre><code>DK = PBKDF2(PRF, PWD, S, C, L)
@@ -78,9 +78,18 @@
 
 <p>If you forget your master secret or your password hints, pa55 cannot help you remember them. Should you be worried? Yes, absolutely! Do not forget the master secret or your password hints. There is no way to retrieve a password that you have generated using the forgotten master secret or the password hint.</p>
 
-<h2>Where to get pa55?</h2>
+<h2>Where do I get pa55?</h2>
 
-<p>Click on the <em>Download on the AppStore</em> button to download to your iOS device or the <em>Android App on Google Play&trade;</em> button to download to your Android&trade; device. If you were thinking what would happen if you lost your mobile device then worry not: pa55 does not store your passwords on the device. In fact, after two minutes of inactivity, pa55 will delete from your device your generated password as well as the master secret and the password hint and reset all other parameters to default values. The method of generating the passwords, i.e., PBKDF2 is a standard function. It is possible to generate the same passwords with the same inputs without a mobile device. Should you not have a mobile device, a stand-alone Java version will be released shortly, which you can use on a computer to generate the same passwords.</p>
+<p>Click on the <em>Download on the AppStore</em> button to download to your iOS device or the <em>Android App on Google Play&trade;</em> button to download to your Android&trade; device. If you were thinking what would happen if you lost your mobile device then worry not: pa55 does not store your passwords on the device. In fact, after two minutes of inactivity, pa55 will delete from your device your generated password as well as the master secret and the password hint and reset all other parameters to default values. The method of generating the passwords, i.e., PBKDF2 is a standard function. It is possible to generate the same passwords with the same inputs without a mobile device. Should you not have a mobile device, there is a stand-alone Java version, which you can use on a computer to generate the same passwords.</p>
+
+<h3>The pa55 app has not been released under the same developer name for iOS and Android. Why?</h3>
+<p>That is because it has been developed by different developers working on the same project :-) The link to both the Apple App Store and the Google Play Store apps from here are the original versions, and will be consistent with the source code released in future.</p>
+
+<h3>How can I download and use the Java standalone version of pa55?</h3>
+<p>Download the latest <tt>pa55.jar</tt> from <a href="https://github.com/anirbanbasu/pa55/tree/master/pa55-java-standalone">https://github.com/anirbanbasu/pa55/tree/master/pa55-java-standalone</a>. Ensure that you have the latest <a href="https://java.com/download">Java Runtime Environment</a> on your computer. In the terminal or command prompt, navigate to the directory where you downloaded <tt>pa55.jar</tt>, and execute the command:<pre>java -jar pa55.jar</pre>The program runs in the terminal interactively.</p>
+
+<h4>Phew, that is ghastly. Is there a pretty interface that I can see on my computer?</h4>
+<p>Sorry, no: not at the moment but we are thinking of building one.</p>
 
 <h2>How much does it cost?</h2>
 
@@ -92,9 +101,19 @@
 
 <h2>Privacy policy</h2>
 
-<p>pa55 does not store or transmit any of the sensitive information that you use to generate your passwords. The app also does not track usage information.  Well, you will have to take our word on it until the source code is made open!</p>
+<p>pa55 does not store or transmit any of the master secrets and the password hints that you use to generate your passwords. The app also does not track usage information.  Well, you will have to take our word on it until the source code is made open! We have made the Java standalone code open, so you can see what is going on. We will release the code for the iOS and Android versions eventually.</p>
 
 <h2>Frequently asked questions</h2>
+
+<h3>There is a Low (10K) option for the password iterations in the Android and the Java versions but there is no such thing in the iOS version. Why?</h3>
+
+<p>Android runs on a variety of devices, some of which do not have powerful enough or optimised hardware for secure hash functions. Therefore, running the default 500K iterations may be very time consuming, hence that option has been enabled in the Android version. It has been enabled in the Java standalone version for consistency. In future, it will also be enabled in the iOS version for consistency. The currently supported iOS devices have reasonably optimised hardware to compute 500K iterations of SHA-256 within a reasonable time, which is why this 10K option was not enabled in the iOS version.</p>
+
+<h3>The default options in iOS seem to be hard coded while there is a way to save user preferences in Android. Why? I thought nothing was stored!</h3>
+
+<p>This is an experimental feature to store the password length, iterations and hash function settings for the user on the device. This is not transmitted anywhere, and is not sensitive enough by itself. This may be enabled in iOS later. Nonetheless, you can disable this option.</p>
+
+<p>The other reason for enabling this feature on Android is to ensure that if a user chooses 10K (because of the aforementioned performance reasons) for the password iterations then the app will remember that choice and go with the 10K option every time without forcing the user to use the slower 500K option the first time.</p>
 
 <h3>Are there other similar apps?</h3>
 
