@@ -195,7 +195,7 @@ public class PA55 {
 			choiceInput = 3;
 		}
 		if(choiceInput != 1) {
-			core.setPbkdfRounds(choiceInput * 250000);
+			core.setPbkdfRounds((choiceInput-1) * 250000);
 		}
 		else {
 			core.setPbkdfRounds(10000);
